@@ -124,6 +124,9 @@ public class BlackJackServerThread extends Thread implements Serializable {
 					String hitOrStandStr = din.readLine();
 					hitOrStand = Integer.parseInt(hitOrStandStr.trim());
 					dummySemaphore.release();
+				} else if (line.equals("chat")) {
+					String s = din.readLine();
+					server.broadcast(curPlayer.get_username() + " : " + s);
 				}
 			}
 		}

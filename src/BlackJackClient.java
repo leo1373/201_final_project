@@ -131,6 +131,20 @@ public class BlackJackClient extends Thread {
 								option1 = Integer.parseInt(scan.nextLine());
 							}
 							if (option1 == 1) {
+								pw.println("chat");
+								System.out.print("Enter Message: ");
+								String m = scan.nextLine();
+								pw.println(m);
+								try {
+									clientLock.lock();
+//									dummySemaphore.acquire();
+									lobbyCondition.await();
+								} catch (InterruptedException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} finally {
+									clientLock.unlock();
+								}		
 							} else if (option1 == 2) {
 								curPage = UIPage.LobbyWaitingToJoin;
 								continue;
@@ -161,7 +175,8 @@ public class BlackJackClient extends Thread {
 						}
 					} else if (curPage == UIPage.LobbyWaitingToJoin) {
 						clearConsole();
-						System.out.println("current tables:");
+					
+					System.out.println("current tables:");
 						pw.println("query tables");
 						try {
 							clientLock.lock();
@@ -374,6 +389,14 @@ public class BlackJackClient extends Thread {
 					try {
 						clientLock.lock();
 						inGameCondition.signal();
+					} finally {
+						clientLock.unlock();
+					}
+				} else {
+					System.out.println(line);
+					try {
+						clientLock.lock();
+						lobbyCondition.signal();
 					} finally {
 						clientLock.unlock();
 					}
