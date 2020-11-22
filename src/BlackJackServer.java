@@ -28,7 +28,11 @@ public class BlackJackServer implements Serializable {
 		catch (Exception ex) {}
 
 	}
-	
+	public void broadcast(String s) {
+		for(BlackJackServerThread bjst : serverThreads) {
+			bjst.sendMessage("\n" + s);
+		}
+	}
 	public void admitPlayerIntoLobby(PlayerThread pt) {
 		lobby.admitPlayer(pt);
 	}

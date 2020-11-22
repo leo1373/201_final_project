@@ -10,7 +10,7 @@ public class DBWrapper {
 	
 	private static final String url = "jdbc:mysql://localhost:3306/blackjack";
 	private static final String username = "root";
-	private static final String password = "djx123456";
+	private static final String password = "root";
 	
 	private Connection conn;
 	
